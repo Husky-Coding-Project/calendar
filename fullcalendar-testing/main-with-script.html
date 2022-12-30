@@ -11,18 +11,37 @@
       document.addEventListener('DOMContentLoaded', function() {
 
         var calendarEl = document.getElementById('calendar');
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          headerToolbar: { center: 'dayGridMonth,timeGridWeek' }, // buttons for switching between views
+
+          // allow user to create events and stuff
+          //plugins: [ interactionPlugin ],
+
+          // buttons for switching between views: month with list of events, and weeks/days with time slots
+          headerToolbar: { center: 'dayGridMonth,timeGridWeek' },
 
           views: {
             dayGridMonth: { // name of view
-              titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+              titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' },
               // other view-specific options here
+              selectable: true, // can select several days
             }
+          },
+
+          // info is.. an object?
+          dateClick: function(info) {
+            alert('Clicked on ' + info.dateStr);
+            alert('Coordinates: ' + info.jsEvent.pageX + ', ' + info.jsEvent.pageY);
+            alert('Current view: ' + info.view.type);
+            // Change day's backgruond color if you want
+            info.dayEl.style.backgroundColor = 'red';
           }
 
         });
         calendar.render();
+
+
+
       });
     </script>
   </head>
