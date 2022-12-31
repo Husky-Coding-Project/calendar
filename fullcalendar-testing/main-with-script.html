@@ -11,21 +11,63 @@
       document.addEventListener('DOMContentLoaded', function() {
 
         var calendarEl = document.getElementById('calendar');
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          headerToolbar: { center: 'dayGridMonth,timeGridWeek' }, // buttons for switching between views
+
+          // allow user to create events and stuff
+          //plugins: [ interactionPlugin ],
+
+          // buttons for switching between views: month with list of events, and weeks/days with time slots
+          headerToolbar: { center: 'dayGridMonth,timeGridWeek' },
 
           views: {
             dayGridMonth: { // name of view
-              titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+              // just changes title at top of calendar -- not date format for events!!
+              titleFormat: { month: '2-digit', day: '2-digit', year: 'numeric' },
               // other view-specific options here
+              selectable: true, // can select several days
             }
-          }
+          },
+
+          // info is.. an object
+          // https://fullcalendar.io/docs/selectable
+          dateClick: function(info) {
+            alert('Clicked on ' + info.dateStr);
+            alert('Coordinates: ' + info.jsEvent.pageX + ', ' + info.jsEvent.pageY);
+            alert('Current view: ' + info.view.type);
+            // Change day's backgruond color if you want
+            info.dayEl.style.backgroundColor = 'red';
+          },
+
+          timeZone: 'UTC',
+          // Hard-code an event! This is an array of event objects.
+          // https://fullcalendar.io/docs/event-object
+          events: [
+            {
+              id: 'a',
+              title: 'my event',
+              start: '2022-12-01',
+              // essential. lets the user drag to change event duration over days
+              // and when the event starts.
+              editable: true
+            }
+          ],
 
         });
+
+        // also from event-object page of docs
+        var event = calendar.getEventById('a') // an event object using the id!
+        var start = event.start // a property (of a Date object)
+        console.log(start.toISOString()) // "2022-12-01T00:00:00.000Z"
+
         calendar.render();
+
+
+
       });
     </script>
   </head>
+
   <body>
     <div id='calendar'></div>
   </body>
