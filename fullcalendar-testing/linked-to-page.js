@@ -1,7 +1,7 @@
 // Import may not work because the module isn't assigned a name?
 // I tried importing everything. But then FullCalendar is not defined.
 // Just importing FullCalendar results in ambiguous export error or something.
-import './node_modules/fullcalendar/index.global.js';
+let Calendar = FullCalendar.Calendar;
 
 // Event listener that waits until page is loaded to initialize calendar
 document.addEventListener('DOMContentLoaded', function() {
