@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // stands for calendar ELEMENT!
   var calendarEl = document.getElementById('calendar');
   // create calendar object. param: <var connected to html, object about options>.
+
   let calendar = new Calendar(calendarEl, {
+    themeSystem: 'bootstrap5',
 
     // this is an object with objects inside it.
-    headerToolbar: { center: 'dayGridMonth,timeGridWeek' }, // buttons for switching between views
+    headerToolbar: {
+      left: 'Settings',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek prev,next'
+    }, // buttons for switching between views
 
     initialView: 'dayGridMonth',
 
@@ -22,10 +28,24 @@ document.addEventListener('DOMContentLoaded', function() {
         titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
         // other view-specific options here
       }
+    },
+
+    // settings button!
+    customButtons: {
+      Settings: {
+        text: 'Settings',
+        click: function() {
+          alert('You clicked on the settings button!');
+          //window.open('./settings.html');
+        }
+      }
     }
+
 
   });
   // needed to actually show the calendar i guess.
   calendar.render();
 });
+
+
 
